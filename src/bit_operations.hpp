@@ -1,6 +1,10 @@
 #pragma once
 #include "config.hpp"
 
+inline BB bb(uint pos) {
+    return 1ULL << pos;
+}
+
 inline uint count_bits(BB bitboard) {
     return __builtin_popcountll(bitboard);
 }
@@ -15,8 +19,14 @@ inline uint pop_lsb(BB& bitboard) {
     return first;
 }
 
-inline BB bb(uint pos) {
-    return 1ULL << pos;
+inline uint msb(BB bitboard) {
+    return 63 - __builtin_clzll(bitboard);
+}
+
+inline uint pop_msb(BB &bitboard) {
+    uint last = msb(bitboard);
+    bitboard ^= bb(last);
+    return last;
 }
 
 inline bool is_bit_active(BB bitboard, uint index) {
@@ -33,6 +43,14 @@ inline void set_bit_off(BB& bitboard, uint index) {
 
 inline void toggle_bit(BB& bitboard, uint index) {
     bitboard ^= bb(index);
+}
+
+inline uint column(uint pos) {
+    return pos % nCOLUMNS;
+}
+
+inline uint row(uint pos) {
+    return (pos - column(pos)) / nCOLUMNS;
 }
 
 inline void print_BB(BB bitboard) {
