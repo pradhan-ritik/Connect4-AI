@@ -5,7 +5,8 @@
 
 
 int main() {
-    Board b;
-    b.print_board();
+    test_board();
+    // Board b;
+    // b.print_board();
     return 0;
 }
