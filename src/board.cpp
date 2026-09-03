@@ -24,3 +24,17 @@ void Board::print_board() {
         }
     }
 }
+
+void Board::make_move(uint col) {
+    uint highest = msb(full_board() & COLUMN[col]);
+    if (highest == 0) {
+        set_bit_on(pieces[turn], col);   
+        next_turn();
+        return;
+    }
+    highest += nCOLUMNS;
+
+    assert(highest < nSQUARES);
+    set_bit_on(pieces[turn], highest);
+    next_turn();
+}
