@@ -5,15 +5,16 @@
 #include <vector>
 
 typedef uint64_t BB; // short for Bitboard
+typedef unsigned int uint;
 
 enum COLOR {
     RED,
     YELLOW,
 };
 
-constexpr int nROWS = 6;
-constexpr int nCOLUMNS = 7;
-constexpr int nSQUARES = nROWS * nCOLUMNS;
+constexpr uint nROWS = 6;
+constexpr uint nCOLUMNS = 7;
+constexpr uint nSQUARES = nROWS * nCOLUMNS;
 
 
 // bitboards
