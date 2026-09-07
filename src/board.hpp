@@ -2,6 +2,20 @@
 #include "config.hpp"
 #include "bit_operations.hpp"
 
+inline void print_red_square() {
+    if (UNICODE_ALLOWED)
+        std::cout << "🔴";
+    else
+        std::cout << "R ";
+}
+
+inline void print_yellow_square() {
+    if (UNICODE_ALLOWED)
+        std::cout << "🟡";
+    else
+        std::cout << "Y ";
+}
+
 class Board {
 private:
     BB pieces[2];
