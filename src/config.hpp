@@ -16,6 +16,8 @@ enum COLOR {
 constexpr int nROWS = 6;
 constexpr int nCOLUMNS = 7;
 constexpr int nSQUARES = nROWS * nCOLUMNS;
+inline bool UNICODE_ALLOWED = true;
+
 
 
 // bitboards
