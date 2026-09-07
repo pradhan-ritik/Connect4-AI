@@ -3,26 +3,36 @@
 void Board::print_board() {
     BB full = full_board();
     bool cur;
+    std::cout << "6 |";
     for (int i = nSQUARES-1; i > -1; i--) {
         cur = is_bit_active(full, i);
         if (cur == 0) {
-            std::cout << "0 ";
+            std::cout << "    |";
         }
         
         if (cur == 1) {
             if (is_bit_active(pieces[RED], i)) {
-                std::cout << "R ";
+                std::cout << " ";
+                print_red_square();
+                std::cout << " |";
             }
             
             if (is_bit_active(pieces[YELLOW], i)) {
-                std::cout << "Y ";
+                std::cout << " ";
+                print_yellow_square();
+                std::cout << " |";
             }
         }
 
         if (i % nCOLUMNS == 0) {
             std::cout << "\n";
+            if (i != 0) {
+                std::cout << row(i-1) << " |";
+            }
         }
     }
+
+    std::cout << "    G    F    E    D    C    B    A\n";
 }
 
 void Board::make_move(uint col) {
