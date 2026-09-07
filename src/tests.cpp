@@ -40,4 +40,5 @@ void test_board() {
     b.make_move(1);
     std::cout << "\n\n\n";
     b.print_board();
+    print_red_square();
 }
