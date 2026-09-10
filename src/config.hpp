@@ -13,6 +13,7 @@ enum COLOR {
     YELLOW,
 };
 
+constexpr BB FULL = ~0ULL;
 constexpr int nROWS = 6;
 constexpr int nCOLUMNS = 7;
 constexpr int nSQUARES = nROWS * nCOLUMNS;
