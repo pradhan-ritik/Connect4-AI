@@ -40,6 +40,18 @@ void test_board() {
     b.make_move(1);
     std::cout << "\n";
     b.print_board();
+    std::cout << "\nundo\n";
+    b.undo_move();
+    b.print_board();
+    std::cout << "\nundo\n";
+    b.undo_move();
+    b.print_board();
+    std::cout << "\nundo\n";
+    b.undo_move();
+    b.print_board();
+}
+
+void test_history() {
     History h = History();
     for (int i = 0; i < 22; i++) {
         h.append(5);

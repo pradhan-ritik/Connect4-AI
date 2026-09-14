@@ -36,6 +36,7 @@ void Board::print_board() {
 }
 
 void Board::make_move(Move col) {
+    history.append(col);
     uint highest = msb(full_board() & COLUMN[col]);
     if (highest == 0) {
         set_bit_on(pieces[turn], col);   
@@ -47,4 +48,11 @@ void Board::make_move(Move col) {
     assert(highest < nSQUARES);
     set_bit_on(pieces[turn], highest);
     next_turn();
+}
+
+void Board::undo_move() {
+    next_turn();
+    Move col = history.pop_last();
+    uint highest = msb(full_board() & COLUMN[col]);
+    set_bit_off(pieces[turn], highest);
 }
