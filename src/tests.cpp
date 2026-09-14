@@ -41,7 +41,7 @@ void test_board() {
     std::cout << "\n";
     b.print_board();
     History h = History();
-    for (int i = 0; i < 42; i++) {
+    for (int i = 0; i < 22; i++) {
         h.append(5);
         if (!(i % 10) || i == 18) { 
             std::cout << "\n" << i << "\n";
@@ -50,6 +50,10 @@ void test_board() {
     }
 
     std::cout << "printing bitboards\n";
+    print_BB64(h.get_hist(0));
+    print_BB64(h.get_hist(1));
+    std::cout << "last move: " << h.pop_last() << "\n";
+    std::cout << "last move: " << h.pop_last() << "\n";
     print_BB64(h.get_hist(0));
     print_BB64(h.get_hist(1));
 }
