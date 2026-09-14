@@ -64,3 +64,15 @@ inline void print_BB(BB bitboard) {
     }
     std::cout << "\n";
 }
+
+inline void print_BB64(BB bitboard) {
+    bool cur;
+    for (int i = 63; i > -1; i--) {
+        cur = is_bit_active(bitboard, i);
+        std::cout << cur << " ";
+        if (i % 8 == 0) {
+            std::cout << "\n";
+        }
+    }
+    std::cout << "\n";
+}

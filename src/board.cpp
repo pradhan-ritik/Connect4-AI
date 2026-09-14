@@ -35,7 +35,7 @@ void Board::print_board() {
     std::cout << "    G    F    E    D    C    B    A\n";
 }
 
-void Board::make_move(uint col) {
+void Board::make_move(Move col) {
     uint highest = msb(full_board() & COLUMN[col]);
     if (highest == 0) {
         set_bit_on(pieces[turn], col);   

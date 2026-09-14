@@ -5,14 +5,20 @@
 #include <vector>
 #include <cassert>
 
-typedef uint64_t BB; // short for Bitboard
+typedef uint64_t BB;
 typedef unsigned int uint;
+typedef uint8_t Move;
+// Allows cout to print Moves
+inline std::ostream &operator<<(std::ostream &os, Move m) {
+    return os << static_cast<unsigned int>(m);
+}
 
 enum COLOR {
     RED,
     YELLOW,
 };
 
+constexpr BB FULL = ~0ULL;
 constexpr int nROWS = 6;
 constexpr int nCOLUMNS = 7;
 constexpr int nSQUARES = nROWS * nCOLUMNS;
