@@ -27,5 +27,5 @@ private:
 public:
     Board() : pieces{0ULL, 0ULL}, turn(RED) { }
     void print_board();
-    void make_move(uint pos);
+    void make_move(Move pos);
 };
