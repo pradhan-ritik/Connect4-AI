@@ -3,6 +3,19 @@
 void Board::print_board() {
     BB full = full_board();
     bool cur;
+
+    // later on red win, yellow win, and draw
+    if (turn == RED) {
+        print_red_square();
+        std::cout << " turn\n";
+    }
+    
+    else {
+        print_yellow_square();
+        std::cout << "turn\n";
+    }
+
+
     std::cout << "6 |";
     for (int i = nSQUARES-1; i > -1; i--) {
         cur = is_bit_active(full, i);
@@ -36,9 +49,13 @@ void Board::print_board() {
 }
 
 void Board::make_move(Move col) {
+    assert(move_in_range(col));
     history.append(col);
-    uint highest = msb(full_board() & COLUMN[col]);
-    if (highest == 0) {
+    BB column = full_board() & COLUMN[col];
+    uint highest = msb(column);
+    // std::cout << "\n\nHIGHEST: " << highest << "\nHIGHEST + NCOL = " << (highest + nCOLUMNS) << "\n\n";
+    // case for if this is nothing in the column
+    if (!column) {
         set_bit_on(pieces[turn], col);   
         next_turn();
         return;
