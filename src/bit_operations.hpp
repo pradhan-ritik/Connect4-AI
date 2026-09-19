@@ -76,3 +76,7 @@ inline void print_BB64(BB bitboard) {
     }
     std::cout << "\n";
 }
+
+inline bool move_in_range(Move m) { 
+    return /*0 <=*/m <= 6;
+}
