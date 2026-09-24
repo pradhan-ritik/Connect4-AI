@@ -13,6 +13,13 @@ inline std::ostream &operator<<(std::ostream &os, Move m) {
     return os << static_cast<unsigned int>(m);
 }
 
+enum STATE {
+    RUNNING,
+    DRAW,
+    RED_WIN,
+    YELLOW_WIN,
+};
+
 enum COLOR {
     RED,
     YELLOW,
