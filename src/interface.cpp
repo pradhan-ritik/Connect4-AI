@@ -11,8 +11,8 @@ void Interface::help() {
 void Interface::run() {
     running = true;
     help();
-    board->print_board();
     while (running) {
+        board->print_board();
         std::cout << ": ";
         char ch = getchar();
         while ('\n'!=getchar());
@@ -28,7 +28,6 @@ void Interface::run_command(char ch) {
         Move m = ch - '1';
         if (!move_in_range(m)) goto invalid;
         board->make_move(m);
-        board->print_board();
     }
 
     else if (isalpha(ch)) {
