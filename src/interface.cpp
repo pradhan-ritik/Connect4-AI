@@ -27,6 +27,10 @@ void Interface::run_command(char ch) {
         // convert '1' - '7' to 0 - 6
         Move m = ch - '1';
         if (!move_in_range(m)) goto invalid;
+        if (board->get_state() != RUNNING) {
+            std::cout << "The game is over! you can not make a move\n";
+            return;
+        }
         board->make_move(m);
     }
 
