@@ -15,6 +15,23 @@ void Board::print_board() {
         std::cout << "turn\n";
     }
 
+    std::cout << "Gamestate: ";
+    switch (state) {
+        case RUNNING:
+            std::cout << "RUNNING\n";
+            break;
+        case DRAW:
+            std::cout << "DRAW\n";
+            break;
+        case RED_WIN:
+            print_red_square();
+            std::cout << "WIN\n";
+            break;
+        case YELLOW_WIN:
+            print_yellow_square();
+            std::cout << "WIN\n";
+            break;
+    }
 
     std::cout << "6 |";
     for (int i = nSQUARES-1; i > -1; i--) {
@@ -65,6 +82,7 @@ void Board::make_move(Move col) {
     assert(highest < nSQUARES);
     set_bit_on(pieces[turn], highest);
     next_turn();
+    update_state();
 }
 
 void Board::undo_move() {
@@ -72,4 +90,20 @@ void Board::undo_move() {
     Move col = history.pop_last();
     uint highest = msb(full_board() & COLUMN[col]);
     set_bit_off(pieces[turn], highest);
+    state = RUNNING;
+}
+
+void Board::update_state() {
+     // supposed to run after make_move(), so it will analyse the state for the previous color
+    bool color = !turn;
+    if (history.get_move_count() == nSQUARES) state = DRAW;
+    BB bitboard = pieces[color];
+    bool win =  _horizontal_east(bitboard) |
+                _horizontal_west(bitboard) |
+                _vertical(bitboard) |
+                _diagonal_east(bitboard) |
+                _diagonal_west(bitboard);
+
+    if (win && color == RED) state = RED_WIN;
+    if (win && color == YELLOW) state = YELLOW_WIN;
 }
