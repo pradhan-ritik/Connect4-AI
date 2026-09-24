@@ -94,7 +94,9 @@ void Board::undo_move() {
 }
 
 void Board::update_state() {
-     // supposed to run after make_move(), so it will analyse the state for the previous color
+    // do not return incase a color has won even though all the squares are taken up
+    if (history.get_move_count() == nSQUARES) state = DRAW;
+    // supposed to run after make_move(), so it will analyse the state for the previous color
     bool color = !turn;
     BB bitboard = pieces[color];
     bool win =  _horizontal(bitboard) |
@@ -105,5 +107,4 @@ void Board::update_state() {
 
     if (win && color == RED) state = RED_WIN;
     if (win && color == YELLOW) state = YELLOW_WIN;
-    if (history.get_move_count() == nSQUARES) state = DRAW;
 }
