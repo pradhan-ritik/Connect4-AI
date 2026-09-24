@@ -74,13 +74,13 @@ void Board::make_move(Move col) {
     // case for if this is nothing in the column
     if (!column) {
         set_bit_on(pieces[turn], col);   
-        next_turn();
-        return;
+        goto postmove;
     }
     highest += nCOLUMNS;
 
     assert(highest < nSQUARES);
     set_bit_on(pieces[turn], highest);
+postmove:
     next_turn();
     update_state();
 }
@@ -98,11 +98,11 @@ void Board::update_state() {
     bool color = !turn;
     if (history.get_move_count() == nSQUARES) state = DRAW;
     BB bitboard = pieces[color];
-    bool win =  _horizontal_east(bitboard) |
-                _horizontal_west(bitboard) |
+    bool win =  _horizontal(bitboard) |
                 _vertical(bitboard) |
                 _diagonal_east(bitboard) |
                 _diagonal_west(bitboard);
+
 
     if (win && color == RED) state = RED_WIN;
     if (win && color == YELLOW) state = YELLOW_WIN;
