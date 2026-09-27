@@ -41,19 +41,33 @@ public:
 
 // Win detection
 inline BB _horizontal(BB bitboard) {
-    return (bitboard) & (bitboard << 1) & (bitboard << 2) & (bitboard << 3);
+    return bitboard
+        & (bitboard << 1)
+        & (bitboard << 2)
+        & (bitboard << 3);
 }
 
 inline BB _vertical(BB bitboard) {
-    return (bitboard) & (bitboard << (nCOLUMNS)) & (bitboard << (2*nCOLUMNS)) & (bitboard << (3*nCOLUMNS));
+    return bitboard
+        & (bitboard << STRIDE)
+        & (bitboard << (2 * STRIDE))
+        & (bitboard << (3 * STRIDE));
 }
 
 inline BB _diagonal_east(BB bitboard) {
-    static const int NE = nCOLUMNS - 1;
-    return (bitboard) & (bitboard << (NE)) & (bitboard << (2*NE)) & (bitboard << (3*NE));
+    static constexpr int DIAGONAL_EAST = STRIDE - 1;
+
+    return bitboard
+        & (bitboard << DIAGONAL_EAST)
+        & (bitboard << (2 * DIAGONAL_EAST))
+        & (bitboard << (3 * DIAGONAL_EAST));
 }
 
 inline BB _diagonal_west(BB bitboard) {
-    static const int NW = nCOLUMNS + 1;
-    return (bitboard) & (bitboard << (NW)) & (bitboard << (2*NW)) & (bitboard << (3*NW));
+    static constexpr int DIAGONAL_WEST = STRIDE + 1;
+
+    return bitboard
+        & (bitboard << DIAGONAL_WEST)
+        & (bitboard << (2 * DIAGONAL_WEST))
+        & (bitboard << (3 * DIAGONAL_WEST));
 }

@@ -46,22 +46,28 @@ inline void toggle_bit(BB& bitboard, uint index) {
 }
 
 inline uint column(uint pos) {
-    return pos % nCOLUMNS;
+    assert(pos % STRIDE < nCOLUMNS);
+    return pos % STRIDE;
 }
 
 inline uint row(uint pos) {
-    return (pos - column(pos)) / nCOLUMNS;
+    return pos / STRIDE;
 }
 
 inline void print_BB(BB bitboard) {
     bool cur;
-    for (int i = nSQUARES-1; i > -1; i--) {
-        cur = is_bit_active(bitboard, i);
-        std::cout << cur << " ";
-        if (i % nCOLUMNS == 0) {
-            std::cout << "\n";
+
+    for (int row = nROWS - 1; row >= 0; --row) {
+        for (int col = nCOLUMNS - 1; col >= 0; --col) {
+            uint pos = row * STRIDE + col;
+
+            cur = is_bit_active(bitboard, pos);
+            std::cout << cur << " ";
         }
+
+        std::cout << "\n";
     }
+
     std::cout << "\n";
 }
 

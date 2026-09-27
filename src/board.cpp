@@ -2,64 +2,60 @@
 
 void Board::print_board() {
     BB full = full_board();
-    bool cur;
 
-    // later on red win, yellow win, and draw
     if (turn == RED) {
         print_red_square();
         std::cout << " turn\n";
     }
-    
     else {
         print_yellow_square();
-        std::cout << "turn\n";
+        std::cout << " turn\n";
     }
 
     std::cout << "Gamestate: ";
+
     switch (state) {
         case RUNNING:
             std::cout << "RUNNING\n";
             break;
+
         case DRAW:
             std::cout << "DRAW\n";
             break;
+
         case RED_WIN:
             print_red_square();
             std::cout << "WIN\n";
             break;
+
         case YELLOW_WIN:
             print_yellow_square();
             std::cout << "WIN\n";
             break;
     }
 
-    std::cout << "6 |";
-    for (int i = nSQUARES-1; i > -1; i--) {
-        cur = is_bit_active(full, i);
-        if (cur == 0) {
-            std::cout << "    |";
-        }
-        
-        if (cur == 1) {
-            if (is_bit_active(pieces[RED], i)) {
+    for (int row = nROWS - 1; row >= 0; --row) {
+        std::cout << row + 1 << " |";
+
+        for (int col = nCOLUMNS - 1; col >= 0; --col) {
+            uint pos = row * STRIDE + col;
+
+            if (!is_bit_active(full, pos)) {
+                std::cout << "    |";
+            }
+            else if (is_bit_active(pieces[RED], pos)) {
                 std::cout << " ";
                 print_red_square();
                 std::cout << " |";
             }
-            
-            if (is_bit_active(pieces[YELLOW], i)) {
+            else {
                 std::cout << " ";
                 print_yellow_square();
                 std::cout << " |";
             }
         }
 
-        if (i % nCOLUMNS == 0) {
-            std::cout << "\n";
-            if (i != 0) {
-                std::cout << row(i-1) << " |";
-            }
-        }
+        std::cout << "\n";
     }
 
     std::cout << "    G    F    E    D    C    B    A\n";
@@ -67,18 +63,19 @@ void Board::print_board() {
 
 void Board::make_move(Move col) {
     assert(move_in_range(col));
+
     history.append(col);
     BB column = full_board() & COLUMN[col];
     uint highest = msb(column);
-    // std::cout << "\n\nHIGHEST: " << highest << "\nHIGHEST + NCOL = " << (highest + nCOLUMNS) << "\n\n";
-    // case for if this is nothing in the column
+
     if (!column) {
-        set_bit_on(pieces[turn], col);   
+        set_bit_on(pieces[turn], col);
         goto postmove;
     }
-    highest += nCOLUMNS;
 
-    assert(highest < nSQUARES);
+    highest += STRIDE;
+
+    assert(highest < nROWS * STRIDE);
     set_bit_on(pieces[turn], highest);
 postmove:
     next_turn();
@@ -104,16 +101,6 @@ void Board::update_state() {
                 _diagonal_east(bitboard) |
                 _diagonal_west(bitboard);
 
-
     if (win && color == RED) state = RED_WIN;
     if (win && color == YELLOW) state = YELLOW_WIN;
-    // for testing
-    if (state != RUNNING) {
-        print_BB(_horizontal(bitboard));
-        print_BB(_vertical(bitboard));
-        print_BB(_diagonal_east(bitboard));
-        print_BB(_diagonal_west(bitboard));
-        print_BB(pieces[color]);
-        print_BB(pieces[!color]);
-    }
 }

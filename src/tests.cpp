@@ -1,8 +1,8 @@
 #include "tests.hpp"
 
 void test_BBs() {
-    std::cout << 15 << " row: " << row(15) << " column: " << column(15) << "\n";
-    print_BB(ROW[row(15)] ^ COLUMN[column(15)]);
+    std::cout << 10 << " row: " << row(10) << " column: " << column(10) << "\n";
+    print_BB(ROW[row(10)] ^ COLUMN[column(10)]);
     print_BB(ROW_1);
     print_BB(ROW_2);
     print_BB(ROW_3);
@@ -11,6 +11,8 @@ void test_BBs() {
     print_BB(ROW_6);
     print_BB(A_COL);
     print_BB(B_COL);
+    std::cout << "B column again, but with the list\n";
+    print_BB(COLUMN[B]);
     print_BB(COLUMN[C]);
     print_BB(D_COL);
     print_BB(E_COL);

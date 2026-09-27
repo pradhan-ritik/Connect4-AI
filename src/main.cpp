@@ -6,6 +6,7 @@
 
 
 int main() {
+    // test_BBs();
     // test_board();
     Board b;
     Interface interface(&b);
