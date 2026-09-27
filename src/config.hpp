@@ -28,6 +28,7 @@ enum COLOR {
 constexpr BB FULL = ~0ULL;
 constexpr int nROWS = 6;
 constexpr int nCOLUMNS = 7;
+constexpr int STRIDE = 8;
 constexpr int nSQUARES = nROWS * nCOLUMNS;
 inline bool UNICODE_ALLOWED = true;
 
@@ -36,15 +37,15 @@ inline bool UNICODE_ALLOWED = true;
 // bitboards
 enum ROW { R1, R2, R3, R4, R5, R6 };
 constexpr BB ROW_1 = 0b1111111ULL;
-constexpr BB ROW_2 = ROW_1 << nCOLUMNS;
-constexpr BB ROW_3 = ROW_1 << nCOLUMNS * 2;
-constexpr BB ROW_4 = ROW_1 << nCOLUMNS * 3;
-constexpr BB ROW_5 = ROW_1 << nCOLUMNS * 4;
-constexpr BB ROW_6 = ROW_1 << nCOLUMNS * 5;
+constexpr BB ROW_2 = ROW_1 << STRIDE;
+constexpr BB ROW_3 = ROW_1 << STRIDE * 2;
+constexpr BB ROW_4 = ROW_1 << STRIDE * 3;
+constexpr BB ROW_5 = ROW_1 << STRIDE * 4;
+constexpr BB ROW_6 = ROW_1 << STRIDE * 5;
 constexpr BB ROW[6] = {ROW_1, ROW_2, ROW_3, ROW_4, ROW_5, ROW_6};
 
-enum COLUMN { G, F, E, D, C, B, A };
-constexpr BB A_COL = 0b100000010000001000000100000010000001ULL;
+enum COLUMN { A, B, C, D, E, F, G };
+constexpr BB A_COL = 0b000000010000000100000001000000010000000100000001ULL;
 constexpr BB B_COL = A_COL << 1;
 constexpr BB C_COL = A_COL << 2;
 constexpr BB D_COL = A_COL << 3;
