@@ -1,5 +1,38 @@
 #include "board.hpp"
 
+// Win detection
+inline BB horizontal(BB bitboard) {
+    return bitboard
+        & (bitboard << 1)
+        & (bitboard << 2)
+        & (bitboard << 3);
+}
+
+inline BB vertical(BB bitboard) {
+    return bitboard
+        & (bitboard << STRIDE)
+        & (bitboard << (2 * STRIDE))
+        & (bitboard << (3 * STRIDE));
+}
+
+inline BB diagonal_east(BB bitboard) {
+    static constexpr int DIAGONAL_EAST = STRIDE - 1;
+
+    return bitboard
+        & (bitboard << DIAGONAL_EAST)
+        & (bitboard << (2 * DIAGONAL_EAST))
+        & (bitboard << (3 * DIAGONAL_EAST));
+}
+
+inline BB diagonal_west(BB bitboard) {
+    static constexpr int DIAGONAL_WEST = STRIDE + 1;
+
+    return bitboard
+        & (bitboard << DIAGONAL_WEST)
+        & (bitboard << (2 * DIAGONAL_WEST))
+        & (bitboard << (3 * DIAGONAL_WEST));
+}
+
 void Board::print_board() {
     BB full = full_board();
 
@@ -96,10 +129,10 @@ void Board::update_state() {
     // supposed to run after make_move(), so it will analyse the state for the previous color
     bool color = !turn;
     BB bitboard = pieces[color];
-    bool win =  _horizontal(bitboard) |
-                _vertical(bitboard) |
-                _diagonal_east(bitboard) |
-                _diagonal_west(bitboard);
+    bool win =  horizontal(bitboard) |
+                vertical(bitboard) |
+                diagonal_east(bitboard) |
+                diagonal_west(bitboard);
 
     if (win && color == RED) state = RED_WIN;
     if (win && color == YELLOW) state = YELLOW_WIN;
