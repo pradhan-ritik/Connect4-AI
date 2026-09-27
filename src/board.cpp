@@ -107,4 +107,13 @@ void Board::update_state() {
 
     if (win && color == RED) state = RED_WIN;
     if (win && color == YELLOW) state = YELLOW_WIN;
+    // for testing
+    if (state != RUNNING) {
+        print_BB(_horizontal(bitboard));
+        print_BB(_vertical(bitboard));
+        print_BB(_diagonal_east(bitboard));
+        print_BB(_diagonal_west(bitboard));
+        print_BB(pieces[color]);
+        print_BB(pieces[!color]);
+    }
 }
