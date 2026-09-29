@@ -32,6 +32,7 @@ public:
     void print_board();
     void make_move(Move col);
     void undo_move();
+    BB generate_moves();
     void update_state();
 
     inline STATE get_state() {

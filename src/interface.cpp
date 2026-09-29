@@ -39,6 +39,7 @@ void Interface::run_command(char ch) {
         else if (ch == 'h') help();
         // else if (ch == 'p') board->print_board();
         else if (ch == 'u') board->undo_move();
+        else if (ch == 'm') print_BB(board->generate_moves());
         else { goto invalid; }
     }
 
