@@ -123,6 +123,37 @@ void Board::undo_move() {
     state = RUNNING;
 }
 
+BB Board::generate_moves() {
+    BB bitboard = full_board();
+    BB moves = bitboard << STRIDE;
+    moves ^= bitboard;
+    moves ^= ROW_1;
+    return moves;
+    /*
+    LOGIC:
+
+    bitboard  = 0000
+                0001
+                0101
+                1101
+
+    moves = 0001
+            0101
+            1101
+            0000
+
+    moves ^= bitboard = 0001
+                        0100
+                        1000
+                        1101
+
+    moves ^= ROW_1 = 0001
+                     0100
+                     1000
+                     0010
+    */
+}
+
 void Board::update_state() {
     // do not return incase a color has won even though all the squares are taken up
     if (history.get_move_count() == nSQUARES) state = DRAW;
