@@ -25,6 +25,7 @@ enum COLOR {
     YELLOW,
 };
 
+constexpr Move NULL_MOVE = 64;
 constexpr BB FULL = ~0ULL;
 constexpr int nROWS = 6;
 constexpr int nCOLUMNS = 7;

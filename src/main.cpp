@@ -8,9 +8,11 @@
 int main() {
     // test_BBs();
     // test_board();
-    Board b;
-    Interface interface(&b);
-    interface.run();
-    // b.print_board();
+    // test_history();
+    test_movepicker();
+
+    // Board b;
+    // Interface interface(&b);
+    // interface.run();
     return 0;
 }
