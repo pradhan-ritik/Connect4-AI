@@ -71,3 +71,12 @@ void test_history() {
     print_BB64(h.get_hist(0));
     print_BB64(h.get_hist(1));
 }
+
+void test_movepicker() {
+    Board b;
+    BB moves = b.generate_moves();
+    print_BB(moves);
+    Movepicker mp = Movepicker(moves);
+    Move mv;
+    while ((mv = mp.next_move()) != NULL_MOVE) std::cout << mv << "\n";
+}
