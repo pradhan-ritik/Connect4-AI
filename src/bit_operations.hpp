@@ -45,12 +45,12 @@ inline void toggle_bit(BB& bitboard, uint index) {
     bitboard ^= bb(index);
 }
 
-inline uint column(uint pos) {
-    assert(pos % STRIDE < nCOLUMNS);
-    return pos % STRIDE;
+inline uint column(Move pos) {
+    assert((pos & 0b111) < nCOLUMNS);
+    return pos & 0b111;
 }
 
-inline uint row(uint pos) {
+inline uint row(Move pos) {
     return pos / STRIDE;
 }
 
