@@ -128,6 +128,7 @@ BB Board::generate_moves() {
     BB moves = bitboard << STRIDE;
     moves ^= bitboard;
     moves ^= ROW_1;
+    moves &= ALL_SQUARES;
     return moves;
     /*
     LOGIC:

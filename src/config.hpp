@@ -44,6 +44,7 @@ constexpr BB ROW_4 = ROW_1 << STRIDE * 3;
 constexpr BB ROW_5 = ROW_1 << STRIDE * 4;
 constexpr BB ROW_6 = ROW_1 << STRIDE * 5;
 constexpr BB ROW[6] = {ROW_1, ROW_2, ROW_3, ROW_4, ROW_5, ROW_6};
+constexpr BB ALL_SQUARES = ROW_1 | ROW_2 | ROW_3 | ROW_4 | ROW_5 | ROW_6;
 
 enum COLUMN { A, B, C, D, E, F, G };
 constexpr BB A_COL = 0b000000010000000100000001000000010000000100000001ULL;

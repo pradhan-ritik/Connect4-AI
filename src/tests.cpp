@@ -80,3 +80,23 @@ void test_movepicker() {
     Move mv;
     while ((mv = mp.next_move()) != NULL_MOVE) std::cout << mv << "\n";
 }
+
+void test_search() {
+    Board b;
+    b.make_move(D);
+    b.make_move(A);
+    b.make_move(D);
+    b.make_move(A);
+    b.make_move(D);
+    b.print_board();
+
+    Search search(&b);
+    SearchResult result = search.find_best_move(4);
+    std::cout << "best move: " << result.best_move << " score: " << result.score << "\n";
+
+    b.make_move(G);
+    b.print_board();
+
+    result = search.find_best_move(4);
+    std::cout << "best move: " << result.best_move << " score: " << result.score << "\n";
+}
