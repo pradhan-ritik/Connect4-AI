@@ -2,6 +2,7 @@
 
 void Interface::help() {
     std::cout << "For playing: 1=A, 2=B, 3=C, 4=D, 5=E, 6=F, 7=G\n";
+    std::cout << "s to show the best move\n";
     std::cout << "u to undo\n";
     std::cout << "q to quit\n";
     // std::cout << "p to print board\n";
@@ -38,6 +39,7 @@ void Interface::run_command(char ch) {
         if (ch == 'q') running = false;
         else if (ch == 'h') help();
         // else if (ch == 'p') board->print_board();
+        else if (ch == 's') print_best_move();
         else if (ch == 'u') board->undo_move();
         else if (ch == 'm') print_BB(board->generate_moves());
         else { goto invalid; }
@@ -48,4 +50,14 @@ void Interface::run_command(char ch) {
     return;
 invalid:
     std::cout << "invalid command\n";
+}
+
+void Interface::print_best_move() {
+    if (board->get_state() != RUNNING) {
+        std::cout << "The game is over! there is no best move\n";
+        return;
+    }
+
+    SearchResult result = search.find_best_move(SEARCH_DEPTH);
+    std::cout << "Best move: " << char('A' + result.best_move) << " (score " << result.score << ")\n";
 }
