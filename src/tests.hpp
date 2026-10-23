@@ -4,8 +4,10 @@
 #include "board.hpp"
 #include "history.hpp"
 #include "movepicker.hpp"
+#include "search.hpp"
 
 void test_BBs();
 void test_board();
 void test_history();
 void test_movepicker();
+void test_search();
