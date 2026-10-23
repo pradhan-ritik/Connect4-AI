@@ -9,10 +9,11 @@ int main() {
     // test_BBs();
     // test_board();
     // test_history();
-    test_movepicker();
+    // test_movepicker();
+    // test_search();
 
-    // Board b;
-    // Interface interface(&b);
-    // interface.run();
+    Board b;
+    Interface interface(&b);
+    interface.run();
     return 0;
 }
