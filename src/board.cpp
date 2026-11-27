@@ -169,3 +169,18 @@ void Board::update_state() {
     if (win && color == RED) state = RED_WIN;
     if (win && color == YELLOW) state = YELLOW_WIN;
 }
+
+BB Board::winning_squares(bool color) {
+    BB p = pieces[color];
+    BB squares = 0ULL;
+
+    for (int d : {1, STRIDE, STRIDE + 1, STRIDE - 1}) {
+        // empty squares completing three-in-a-line, either at an end or filling a gap
+        squares |= (p << d) & (p << 2 * d) & (p << 3 * d);
+        squares |= (p >> d) & (p >> 2 * d) & (p >> 3 * d);
+        squares |= (p << d) & (p << 2 * d) & (p >> d);
+        squares |= (p >> d) & (p >> 2 * d) & (p << d);
+    }
+
+    return squares & ~full_board() & ALL_SQUARES;
+}
