@@ -43,6 +43,7 @@
 build/
 Build/
 build-*/
+compile_flags.txt
 
 # Temporary files
 *.tmp
