@@ -12,6 +12,7 @@ int main() {
     // test_movepicker();
     // test_search();
     // test_evaluation();
+    // test_iterative_deepening();
 
     Board b;
     Interface interface(&b);
