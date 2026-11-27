@@ -38,4 +38,12 @@ public:
     inline STATE get_state() {
         return state;
     }
+
+    inline bool get_turn() {
+        return turn;
+    }
+
+    inline BB get_pieces(bool color) {
+        return pieces[color];
+    }
 };

@@ -11,3 +11,4 @@ void test_board();
 void test_history();
 void test_movepicker();
 void test_search();
+void test_evaluation();

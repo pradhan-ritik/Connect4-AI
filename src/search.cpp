@@ -31,5 +31,30 @@ int Search::negamax(int depth, int ply) {
 }
 
 int Search::evaluate() {
-    return 0;
+    bool us = board->get_turn();
+    BB own = board->get_pieces(us);
+    BB opponent = board->get_pieces(!us);
+
+    int center = count_bits(own & COLUMN[D]) - count_bits(opponent & COLUMN[D]);
+    WindowCounts own_windows = count_windows(own, opponent);
+    WindowCounts opponent_windows = count_windows(opponent, own);
+
+    return CENTER_WEIGHT * center
+         + TWO_WEIGHT * (own_windows.twos - opponent_windows.twos)
+         + THREE_WEIGHT * own_windows.threes
+         - OPPONENT_THREE_WEIGHT * opponent_windows.threes;
+}
+
+WindowCounts Search::count_windows(BB own, BB opponent) {
+    WindowCounts counts = {0, 0};
+
+    for (BB window : WINDOWS) {
+        if (window & opponent) continue;
+
+        uint own_in_window = count_bits(window & own);
+        if (own_in_window == 2) counts.twos++;
+        else if (own_in_window == 3) counts.threes++;
+    }
+
+    return counts;
 }

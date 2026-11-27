@@ -100,3 +100,25 @@ void test_search() {
     result = search.find_best_move(4);
     std::cout << "best move: " << result.best_move << " score: " << result.score << "\n";
 }
+
+void test_evaluation() {
+    std::cout << "first horizontal, vertical and diagonal windows:\n";
+    print_BB(WINDOWS[0]);
+    print_BB(WINDOWS[24]);
+    print_BB(WINDOWS[45]);
+    print_BB(WINDOWS[57]);
+
+    Board b;
+    Search search(&b);
+    SearchResult result = search.find_best_move(1);
+    std::cout << "empty board best move: " << result.best_move << " score: " << result.score << "\n";
+
+    b.make_move(B);
+    b.make_move(G);
+    b.make_move(C);
+    b.make_move(G);
+    b.print_board();
+
+    result = search.find_best_move(1);
+    std::cout << "best move: " << result.best_move << " score: " << result.score << "\n";
+}

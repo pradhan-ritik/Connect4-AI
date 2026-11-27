@@ -11,6 +11,7 @@ int main() {
     // test_history();
     // test_movepicker();
     // test_search();
+    // test_evaluation();
 
     Board b;
     Interface interface(&b);

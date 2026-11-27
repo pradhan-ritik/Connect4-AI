@@ -17,4 +17,5 @@ public:
     void run();
     void run_command(char ch);
     void print_best_move();
+    void play_best_move();
 };
