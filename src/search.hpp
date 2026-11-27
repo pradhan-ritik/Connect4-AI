@@ -27,7 +27,7 @@ private:
     Board* board;
     Move best_root_move;
 
-    int negamax(int depth, int ply);
+    int negamax(int depth, int ply, int alpha, int beta);
     int evaluate();
     WindowCounts count_windows(BB own, BB opponent);
 

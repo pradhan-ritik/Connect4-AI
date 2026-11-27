@@ -2,11 +2,11 @@
 
 SearchResult Search::find_best_move(int depth) {
     best_root_move = NULL_MOVE;
-    int score = negamax(depth, 0);
+    int score = negamax(depth, 0, -INFINITE_SCORE, INFINITE_SCORE);
     return {best_root_move, score};
 }
 
-int Search::negamax(int depth, int ply) {
+int Search::negamax(int depth, int ply, int alpha, int beta) {
     STATE state = board->get_state();
     if (state == DRAW) return DRAW_SCORE;
     if (state != RUNNING) return -(WIN_SCORE - ply);
@@ -18,13 +18,16 @@ int Search::negamax(int depth, int ply) {
 
     while ((move = movepicker.next_move()) != NULL_MOVE) {
         board->make_move(move);
-        int score = -negamax(depth - 1, ply + 1);
+        int score = -negamax(depth - 1, ply + 1, -beta, -alpha);
         board->undo_move();
 
         if (score > best_score) {
             best_score = score;
             if (ply == 0) best_root_move = move;
         }
+
+        if (score > alpha) alpha = score;
+        if (alpha >= beta) break;
     }
 
     return best_score;
