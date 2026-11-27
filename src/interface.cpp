@@ -1,11 +1,11 @@
 #include "interface.hpp"
 
 void Interface::help() {
-    std::cout << "For playing: 1=A, 2=B, 3=C, 4=D, 5=E, 6=F, 7=G\n";
+    std::cout << "For playing: type the column letter, a-g\n";
     std::cout << "s to show the best move\n";
+    std::cout << "p to play the best move\n";
     std::cout << "u to undo\n";
     std::cout << "q to quit\n";
-    // std::cout << "p to print board\n";
     std::cout << "h for this text\n";
 }
 
@@ -23,27 +23,24 @@ void Interface::run() {
 }
 
 void Interface::run_command(char ch) {
-    // Move
-    if (isdigit(ch)) {
-        // convert '1' - '7' to 0 - 6
-        Move m = ch - '1';
-        if (!move_in_range(m)) goto invalid;
+    if (ch >= 'a' && ch <= 'g') {
         if (board->get_state() != RUNNING) {
             std::cout << "The game is over! you can not make a move\n";
             return;
         }
-        board->make_move(m);
+        board->make_move(ch - 'a');
     }
 
     else if (isalpha(ch)) {
         if (ch == 'q') running = false;
         else if (ch == 'h') help();
-        // else if (ch == 'p') board->print_board();
         else if (ch == 's') print_best_move();
+        else if (ch == 'p') play_best_move();
         else if (ch == 'u') board->undo_move();
         else if (ch == 'm') print_BB(board->generate_moves());
         else { goto invalid; }
     }
+    else { goto invalid; }
 
 
     // if everything works, then end, if something goes wrong, "goto failiure"
@@ -60,4 +57,15 @@ void Interface::print_best_move() {
 
     SearchResult result = search.find_best_move(SEARCH_DEPTH);
     std::cout << "Best move: " << char('A' + result.best_move) << " (score " << result.score << ")\n";
+}
+
+void Interface::play_best_move() {
+    if (board->get_state() != RUNNING) {
+        std::cout << "The game is over! you can not make a move\n";
+        return;
+    }
+
+    SearchResult result = search.find_best_move(SEARCH_DEPTH);
+    std::cout << "Engine plays: " << char('A' + result.best_move) << " (score " << result.score << ")\n";
+    board->make_move(result.best_move);
 }
