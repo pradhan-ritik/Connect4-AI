@@ -72,9 +72,9 @@ void test_history() {
     print_BB64(h.get_hist(1));
 }
 
-void print_move_order(Board& b) {
+void print_move_order(Board& b, Move first_move = NULL_MOVE) {
     bool us = b.get_turn();
-    Movepicker mp(b.generate_moves(), b.winning_squares(us), b.winning_squares(!us));
+    Movepicker mp(b.generate_moves(), b.winning_squares(us), b.winning_squares(!us), first_move);
     Move mv;
     while ((mv = mp.next_move()) != NULL_MOVE) std::cout << mv << " ";
     std::cout << "\n";
@@ -100,6 +100,10 @@ void test_movepicker() {
     block.print_board();
     std::cout << "block D first (expected 3 2 4 1 5 0 6): ";
     print_move_order(block);
+
+    Board empty;
+    std::cout << "empty board with first move F (expected 5 3 2 4 1 0 6): ";
+    print_move_order(empty, F);
 }
 
 void test_search() {
@@ -142,4 +146,30 @@ void test_evaluation() {
 
     result = search.find_best_move(1);
     std::cout << "best move: " << result.best_move << " score: " << result.score << "\n";
+}
+
+void test_iterative_deepening() {
+    Board b;
+    for (Move col : {D, A, D}) b.make_move(col);
+    b.print_board();
+    BB red = b.get_pieces(RED), yellow = b.get_pieces(YELLOW);
+    bool turn = b.get_turn();
+
+    Search search(&b);
+    auto start = Clock::now();
+    SearchResult result = search.find_best_move(MAX_DEPTH, 200);
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(Clock::now() - start).count();
+    std::cout << "200ms search: best move: " << result.best_move << " score: " << result.score
+              << " depth: " << result.depth << " time: " << elapsed << "ms\n";
+
+    bool unchanged = red == b.get_pieces(RED) && yellow == b.get_pieces(YELLOW) && turn == b.get_turn();
+    std::cout << "board unchanged after search: " << (unchanged ? "yes" : "NO") << "\n";
+
+    Board win;
+    for (Move col : {D, D, D, D, C, C, B, E}) win.make_move(col);
+    win.print_board();
+    Search win_search(&win);
+    result = win_search.find_best_move(MAX_DEPTH, 200);
+    std::cout << "win in one (expected move 0, score 999, depth 1): best move: " << result.best_move
+              << " score: " << result.score << " depth: " << result.depth << "\n";
 }

@@ -3,7 +3,7 @@
 #include "board.hpp"
 #include "search.hpp"
 
-constexpr int SEARCH_DEPTH = 6;
+constexpr int SEARCH_TIME_MS = 1000;
 
 class Interface {
 private:
