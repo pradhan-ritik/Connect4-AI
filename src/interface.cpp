@@ -4,6 +4,8 @@ void Interface::help() {
     std::cout << "For playing: type the column letter, a-g\n";
     std::cout << "s to show the best move\n";
     std::cout << "p to play the best move\n";
+    std::cout << "m to switch mode (engine automatically replies to your moves)\n";
+    std::cout << "l to show the legal moves\n";
     std::cout << "u to undo\n";
     std::cout << "q to quit\n";
     std::cout << "h for this text\n";
@@ -29,6 +31,7 @@ void Interface::run_command(char ch) {
             return;
         }
         board->make_move(ch - 'a');
+        if (auto_play && board->get_state() == RUNNING) play_best_move();
     }
 
     else if (isalpha(ch)) {
@@ -37,7 +40,8 @@ void Interface::run_command(char ch) {
         else if (ch == 's') print_best_move();
         else if (ch == 'p') play_best_move();
         else if (ch == 'u') board->undo_move();
-        else if (ch == 'm') print_BB(board->generate_moves());
+        else if (ch == 'm') toggle_auto_play();
+        else if (ch == 'l') print_BB(board->generate_moves());
         else { goto invalid; }
     }
     else { goto invalid; }
@@ -68,4 +72,10 @@ void Interface::play_best_move() {
     SearchResult result = search.find_best_move(SEARCH_DEPTH);
     std::cout << "Engine plays: " << char('A' + result.best_move) << " (score " << result.score << ")\n";
     board->make_move(result.best_move);
+}
+
+void Interface::toggle_auto_play() {
+    auto_play = !auto_play;
+    if (auto_play) std::cout << "Mode: engine automatically replies to your moves\n";
+    else std::cout << "Mode: manual\n";
 }
