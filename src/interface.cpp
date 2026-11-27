@@ -59,8 +59,8 @@ void Interface::print_best_move() {
         return;
     }
 
-    SearchResult result = search.find_best_move(SEARCH_DEPTH);
-    std::cout << "Best move: " << char('A' + result.best_move) << " (score " << result.score << ")\n";
+    SearchResult result = search.find_best_move(MAX_DEPTH, SEARCH_TIME_MS);
+    std::cout << "Best move: " << char('A' + result.best_move) << " (score " << result.score << ", depth " << result.depth << ")\n";
 }
 
 void Interface::play_best_move() {
@@ -69,8 +69,8 @@ void Interface::play_best_move() {
         return;
     }
 
-    SearchResult result = search.find_best_move(SEARCH_DEPTH);
-    std::cout << "Engine plays: " << char('A' + result.best_move) << " (score " << result.score << ")\n";
+    SearchResult result = search.find_best_move(MAX_DEPTH, SEARCH_TIME_MS);
+    std::cout << "Engine plays: " << char('A' + result.best_move) << " (score " << result.score << ", depth " << result.depth << ")\n";
     board->make_move(result.best_move);
 }
 
