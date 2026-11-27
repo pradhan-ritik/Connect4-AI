@@ -13,7 +13,8 @@ int Search::negamax(int depth, int ply, int alpha, int beta) {
     if (depth == 0) return evaluate();
 
     int best_score = -INFINITE_SCORE;
-    Movepicker movepicker(board->generate_moves());
+    bool us = board->get_turn();
+    Movepicker movepicker(board->generate_moves(), board->winning_squares(us), board->winning_squares(!us));
     Move move;
 
     while ((move = movepicker.next_move()) != NULL_MOVE) {
