@@ -12,3 +12,4 @@ void test_history();
 void test_movepicker();
 void test_search();
 void test_evaluation();
+void test_iterative_deepening();
