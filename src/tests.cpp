@@ -72,13 +72,34 @@ void test_history() {
     print_BB64(h.get_hist(1));
 }
 
+void print_move_order(Board& b) {
+    bool us = b.get_turn();
+    Movepicker mp(b.generate_moves(), b.winning_squares(us), b.winning_squares(!us));
+    Move mv;
+    while ((mv = mp.next_move()) != NULL_MOVE) std::cout << mv << " ";
+    std::cout << "\n";
+}
+
 void test_movepicker() {
     Board b;
-    BB moves = b.generate_moves();
-    print_BB(moves);
-    Movepicker mp = Movepicker(moves);
-    Move mv;
-    while ((mv = mp.next_move()) != NULL_MOVE) std::cout << mv << "\n";
+    print_BB(b.generate_moves());
+    std::cout << "empty board order (expected 3 2 4 1 5 0 6): ";
+    print_move_order(b);
+
+    for (Move col : {B, C, D, B, G, C, G, D, G, F}) b.make_move(col);
+    b.print_board();
+    std::cout << "red winning squares:\n";
+    print_BB(b.winning_squares(RED));
+    std::cout << "yellow winning squares:\n";
+    print_BB(b.winning_squares(YELLOW));
+    std::cout << "win G, center-first quiet D C B F, bad E A (expected 6 3 2 1 5 4 0): ";
+    print_move_order(b);
+
+    Board block;
+    for (Move col : {A, A, B, B, C}) block.make_move(col);
+    block.print_board();
+    std::cout << "block D first (expected 3 2 4 1 5 0 6): ";
+    print_move_order(block);
 }
 
 void test_search() {
