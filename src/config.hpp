@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
+#include <array>
 
 typedef uint64_t BB;
 typedef unsigned int uint;
@@ -55,3 +56,33 @@ constexpr BB E_COL = A_COL << 4;
 constexpr BB F_COL = A_COL << 5;
 constexpr BB G_COL = A_COL << 6;
 constexpr BB COLUMN[7] = {A_COL, B_COL, C_COL, D_COL, E_COL, F_COL, G_COL};
+
+// every line of 4 squares a player could win with
+constexpr int nWINDOWS = 69;
+constexpr std::array<BB, nWINDOWS> generate_windows() {
+    std::array<BB, nWINDOWS> windows{};
+    constexpr int row_steps[4] = {0, 1, 1, 1};
+    constexpr int col_steps[4] = {1, 0, 1, -1};
+    int count = 0;
+
+    for (int direction = 0; direction < 4; ++direction) {
+        for (int row = 0; row < nROWS; ++row) {
+            for (int col = 0; col < nCOLUMNS; ++col) {
+                int end_row = row + 3 * row_steps[direction];
+                int end_col = col + 3 * col_steps[direction];
+                if (end_row >= nROWS || end_col < 0 || end_col >= nCOLUMNS) continue;
+
+                BB window = 0ULL;
+                for (int i = 0; i < 4; ++i) {
+                    int square = (row + i * row_steps[direction]) * STRIDE + col + i * col_steps[direction];
+                    window |= 1ULL << square;
+                }
+                windows[count++] = window;
+            }
+        }
+    }
+
+    return windows;
+}
+constexpr std::array<BB, nWINDOWS> WINDOWS = generate_windows();
+static_assert(WINDOWS[nWINDOWS - 1] != 0ULL);
