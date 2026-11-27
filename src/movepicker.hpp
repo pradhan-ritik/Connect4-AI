@@ -12,6 +12,6 @@ private:
 
     void add_in_column_order(BB moves);
 public:
-    Movepicker(BB moves, BB own_threats, BB opponent_threats);
+    Movepicker(BB moves, BB own_threats, BB opponent_threats, Move first_move = NULL_MOVE);
     Move next_move();
 };

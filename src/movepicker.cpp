@@ -1,6 +1,11 @@
 #include "movepicker.hpp"
 
-Movepicker::Movepicker(BB moves, BB own_threats, BB opponent_threats) : move_count(0), next_index(0) {
+Movepicker::Movepicker(BB moves, BB own_threats, BB opponent_threats, Move first_move) : move_count(0), next_index(0) {
+    if (first_move != NULL_MOVE && (moves & COLUMN[first_move])) {
+        ordered_moves[move_count++] = first_move;
+        moves &= ~COLUMN[first_move];
+    }
+
     BB wins = moves & own_threats;
     BB blocks = moves & opponent_threats & ~wins;
     BB bad = moves & (opponent_threats >> STRIDE) & ~wins & ~blocks;
