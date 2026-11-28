@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 There is no build system beyond the `Makefile`; it compiles every `src/*.cpp` into a single `./ai` binary (git-ignored):
 
 - `make` — warnings on (`-Wall -Wextra`)
-- `make performance` — `-O3` (no warnings, asserts still active since `NDEBUG` is not defined)
+- `make performance` — `-O3 -DNDEBUG` (no warnings, asserts disabled)
 - `make debug` — `-g` with warnings
 - `./ai` — run
 
