@@ -9,7 +9,7 @@ You only need `g++` and `make`. Every `src/*.cpp` file is compiled into a single
 | Command | Flags | Use |
 |---|---|---|
 | `make` | `-Wall -Wextra` | normal development build |
-| `make performance` | `-O3` | fastest build, for playing (asserts still run) |
+| `make performance` | `-O3 -DNDEBUG` | fastest build, for playing (asserts disabled) |
 | `make debug` | `-g -Wall -Wextra` | debugging with gdb |
 
 ```sh
